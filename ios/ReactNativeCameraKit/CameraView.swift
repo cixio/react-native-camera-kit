@@ -97,6 +97,18 @@ public class CameraView: UIView {
             #endif
         }
     }
+    
+    // Use constraints for FABRIC 0.80.0
+    private func addFullSizeSubview(_ subview: UIView) {
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(subview)
+        NSLayoutConstraint.activate([
+            subview.topAnchor.constraint(equalTo: self.topAnchor),
+            subview.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            subview.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            subview.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+    }
 
     // MARK: Lifecycle
 
@@ -130,6 +142,10 @@ public class CameraView: UIView {
 
         addSubview(focusInterfaceView)
         focusInterfaceView.delegate = camera
+        
+        addFullSizeSubview(camera.previewView)
+        addFullSizeSubview(scannerInterfaceView)
+        addFullSizeSubview(focusInterfaceView)
 
         handleCameraPermission()
         
